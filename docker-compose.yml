@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  user-service:
+    build: .
+    image: user-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db1
+      - db2
+  db1:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: db1
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init-db1.sql:/docker-entrypoint-initdb.d/init-db1.sql
+
+  db2:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: db2
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpass
+      MYSQL_ROOT_PASSWORD: rootpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init-db2.sql:/docker-entrypoint-initdb.d/init-db2.sql
