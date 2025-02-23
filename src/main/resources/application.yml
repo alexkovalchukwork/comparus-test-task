@@ -2,7 +2,7 @@ app:
   data-sources:
     - name: data-base-1
       strategy: postgres
-      url: jdbc:postgresql://service-db1-1:5432/db1
+      url: jdbc:postgresql://db1:5432/db1
       table: users
       user: testuser
       password: testpass
@@ -13,7 +13,7 @@ app:
         surname: last_name
     - name: data-base-2
       strategy: mysql
-      url: jdbc:mysql://service-db2-1:3306/db2?useSSL=false&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://db2:3306/db2?useSSL=false&allowPublicKeyRetrieval=true
       table: user_table
       user: testuser
       password: testpass

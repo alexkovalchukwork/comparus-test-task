@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.util.List;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 public interface UserApi {
-
   @Operation(
       summary = "Retrieve filtered users",
       description = "Get users with optional filters using 'filter.' prefix",
@@ -55,18 +55,22 @@ public interface UserApi {
           @ApiResponse(
               responseCode = "400",
               description = "Invalid request parameters",
-              content = @Content(schema = @Schema(
-                  implementation = ErrorResponse.class,
-                  example = "{\"error\":\"Invalid filter parameter\"}"
-              ))
+              content = @Content(
+                  schema = @Schema(implementation = ErrorResponse.class),
+                  examples = @ExampleObject(
+                      value = "{\"error\":\"Invalid filter parameter\", \"message\":\"Your provided filters are not valid\"}"
+                  )
+              )
           ),
           @ApiResponse(
               responseCode = "500",
               description = "Data source access error",
-              content = @Content(schema = @Schema(
-                  implementation = ErrorResponse.class,
-                  example = "{\"error\":\"Data source error: data-base-1\",\"message\":\"Connection failed\"}"
-              ))
+              content = @Content(
+                  schema = @Schema(implementation = ErrorResponse.class),
+                  examples = @ExampleObject(
+                      value = "{\"error\":\"Data source error: data-base-1\", \"message\":\"Connection failed\"}"
+                  )
+              )
           )
       }
   )
